@@ -7,10 +7,10 @@ class UserController {
         console.log("Signup route hit"); // Add this
         console.log(req.body); // Check body
 
-      const { email, phone, cnic, password } = req.body;
+      const { email, phoneNumber , cnic, password } = req.body;
 
-      // Basic validation (you can improve this)
-      if (!email || !phone || !cnic || !password) {
+      
+      if (!email || !phoneNumber || !cnic || !password) {
         return res.status(400).json({ message: 'All fields are required' });
       }
 

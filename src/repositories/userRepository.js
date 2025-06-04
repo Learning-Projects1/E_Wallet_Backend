@@ -11,7 +11,7 @@ class UserRepository {
   }
 
   async findByPhoneNumber(phoneNumber) {
-    return await User.findOne({ phoneNumber });
+    return await User.findOne({ phoneNumber});
   }
 
   async findByCnic(cnic) {
