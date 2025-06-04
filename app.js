@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const connectDB = require('./src/config/db');
+const userRoutes = require('./src/routes/userRoutes');
 
 const app = express();
 
@@ -9,6 +10,10 @@ connectDB();
 
 // Middleware
 app.use(express.json());
+
+
+app.use('/api/authentication', userRoutes);
+
 
 // Routes
 app.get('/', (req, res) => {

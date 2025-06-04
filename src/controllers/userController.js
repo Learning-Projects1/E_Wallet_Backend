@@ -3,6 +3,10 @@ const userService = require('../services/userService');
 class UserController {
   async signUp(req, res) {
     try {
+
+        console.log("Signup route hit"); // Add this
+        console.log(req.body); // Check body
+
       const { email, phone, cnic, password } = req.body;
 
       // Basic validation (you can improve this)
