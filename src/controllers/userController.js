@@ -63,6 +63,9 @@ class UserController {
             code : 200,
             message : "",
             "wrong_phone_password": false,
+            "emailVerified": true,
+            "phoneVerified": false,
+
         })
 
     }catch(error){
