@@ -64,7 +64,7 @@ class UserController {
             message : "",
             "wrong_phone_password": false,
             "emailVerified": true,
-            "phoneVerified": false,
+            "phoneVerified": true,
 
         })
 
