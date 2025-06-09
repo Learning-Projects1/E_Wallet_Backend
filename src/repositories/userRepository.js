@@ -17,6 +17,7 @@ class UserRepository {
   async findByCnic(cnic) {
     return await User.findOne({ cnic });
   }
+
 }
 
 module.exports = new UserRepository();

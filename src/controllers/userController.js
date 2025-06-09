@@ -4,8 +4,8 @@ class UserController {
   async signUp(req, res) {
     try {
 
-        console.log("Signup route hit"); // Add this
-        console.log(req.body); // Check body
+        console.log("Signup route hit");
+        console.log(req.body);
 
       const { email, phoneNumber , cnic, password } = req.body;
 
@@ -25,6 +25,58 @@ class UserController {
       res.status(400).json({ message: error.message });
     }
   }
+
+
+
+
+
+  async login(req, res){
+
+    try{
+
+        console.log("Login route hit");
+        console.log(req.body);
+
+        const {phoneNumber, password} = req.body
+
+        if(!phoneNumber || phoneNumber.trim() === ""){
+          return res.status(200).json({
+            successful : false,
+            code : 400,
+            message : "Phone number is required!"
+          })
+        }
+
+        if(!password || password.trim() === ""){
+          return res.status(200).json({
+            successful : false,
+            code : 400,
+            message : "Password is required!"
+          })
+        }
+
+
+        var login = await userService.login({phoneNumber, password})
+
+        return res.status(200).json({
+            successful : true,
+            code : 200,
+            message : "",
+            "wrong_phone_password": false,
+        })
+
+    }catch(error){
+        return res.status(200).json({
+            successful : false,
+            code : 400,
+            message : "Login Failed!",
+            subMessage : error.message
+        })
+    }
+
+    
+  }
+
 }
 
 module.exports = new UserController();
