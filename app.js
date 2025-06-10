@@ -1,7 +1,8 @@
 require('dotenv').config();
 const express = require('express');
 const connectDB = require('./src/config/db');
-const userRoutes = require('./src/routes/userRoutes');
+const authenticationRoutes = require('./src/routes/authenticationRoutes');
+const userRoutes = require('./src/routes/userRoutes')
 
 
 
@@ -14,7 +15,8 @@ connectDB();
 app.use(express.json());
 
 
-app.use('/api/authentication', userRoutes);
+app.use('/api/authentication', authenticationRoutes);
+app.use('/api/user', userRoutes);
 
 
 // Routes

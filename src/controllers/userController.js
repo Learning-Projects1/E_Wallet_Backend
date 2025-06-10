@@ -1,84 +1,31 @@
-const userService = require('../services/userService');
 
 class UserController {
-  async signUp(req, res) {
-    try {
 
-        console.log("Signup route hit");
-        console.log(req.body);
+    async getHome(req, res){
 
-      const { email, phoneNumber , cnic, password } = req.body;
-
-      
-      if (!email || !phoneNumber || !cnic || !password) {
-        return res.status(400).json({ message: 'All fields are required' });
-      }
-
-      const user = await userService.signUp({ email, phoneNumber, cnic, password });
-
-      res.status(201).json({
-        message: 'User created successfully',
-        userId: user._id,
-        email: user.email,
-      });
-    } catch (error) {
-      res.status(400).json({ message: error.message });
-    }
-  }
+        try {
+            
+            console.log('user/home route hit')
 
 
+            
+            return  res.status(200).json({ 
+                "successful": true,
+                "code": 200,
+                "message": "Data fetched successfully",
+                "data" : {
+                    "currentBalance": "2500.00",
+
+                }
+             });
 
 
-
-  async login(req, res){
-
-    try{
-
-        console.log("Login route hit");
-        console.log(req.body);
-
-        const {phoneNumber, password} = req.body
-
-        if(!phoneNumber || phoneNumber.trim() === ""){
-          return res.status(200).json({
-            successful : false,
-            code : 400,
-            message : "Phone number is required!"
-          })
-        }
-
-        if(!password || password.trim() === ""){
-          return res.status(200).json({
-            successful : false,
-            code : 400,
-            message : "Password is required!"
-          })
+        } catch (error) {
+             return  res.status(400).json({ message: 'All fields are required' });
         }
 
 
-        var login = await userService.login({phoneNumber, password})
-
-        return res.status(200).json({
-            successful : true,
-            code : 200,
-            message : "",
-            "wrong_phone_password": false,
-            "emailVerified": true,
-            "phoneVerified": true,
-
-        })
-
-    }catch(error){
-        return res.status(200).json({
-            successful : false,
-            code : 400,
-            message : "Login Failed!",
-            subMessage : error.message
-        })
     }
-
-    
-  }
 
 }
 

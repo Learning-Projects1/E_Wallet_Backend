@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
-const userRepository = require('../repositories/userRepository');
-const User = require('../models/User');
+const authRepository = require('../repositories/authRepository');
+const UserModel = require('../models/UserModel');
+const uuid = require('uuid');
 
 class UserService {
 
@@ -9,25 +10,30 @@ class UserService {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async signUp({ email, phoneNumber, cnic, password }) {
     // Check if user already exists
-    const emailExists = await userRepository.findByEmail(email);
+    const emailExists = await authRepository.findByEmail(email);
     if (emailExists) throw new Error('Email already in use');
 
-    const phoneExists = await userRepository.findByPhoneNumber(phoneNumber);
+    const phoneExists = await authRepository.findByPhoneNumber(phoneNumber);
     if (phoneExists) throw new Error('Phone number already in use');
 
-    const cnicExists = await userRepository.findByCnic(cnic);
+    const cnicExists = await authRepository.findByCnic(cnic);
     if (cnicExists) throw new Error('CNIC already in use');
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create user
-    const user = await userRepository.create({
-      email,
-      phoneNumber,
-      cnic,
-      password: hashedPassword,
-    });
+    const userData = UserModel({
+      userId : uuid.v4().trim(),
+      profile : {
+        email: email.trim(),
+        phoneNumber: phoneNumber.trim(),
+        cnic: cnic.trim()
+      },
+      password : hashedPassword.trim()
+    })
+
+    const user = await authRepository.create( userData );
 
     return user;
   }
@@ -39,7 +45,7 @@ class UserService {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async login({phoneNumber, password}){
 
-    var user = await userRepository.findByPhoneNumber(phoneNumber)
+    var user = await authRepository.findByPhoneNumber(phoneNumber)
 
     if(!user){
       throw new Error("User does not exist")
