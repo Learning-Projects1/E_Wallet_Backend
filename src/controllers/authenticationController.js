@@ -56,7 +56,7 @@ class AuthenticationController {
         }
 
 
-        var login = await userService.login({phoneNumber, password})
+        const user = await userService.login({phoneNumber, password})
 
         return res.status(200).json({
             successful : true,
@@ -65,6 +65,7 @@ class AuthenticationController {
             "wrong_phone_password": false,
             "emailVerified": true,
             "phoneVerified": true,
+            "profile" : user.profile
 
         })
 
