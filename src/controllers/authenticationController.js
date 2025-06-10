@@ -65,7 +65,9 @@ class AuthenticationController {
             "wrong_phone_password": false,
             "emailVerified": true,
             "phoneVerified": true,
+            "data" : {
             "profile" : user.profile
+            }
 
         })
 
