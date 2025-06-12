@@ -14,34 +14,8 @@ const userSchema = new mongoose.Schema({
 
 
       password: { type: String, required: true },
-
-
-      accountDetails: {
-
-        cardNumber: {   type: String,default: ""},
-
-        currentBalance: { type: Number,  default: 0},
-
-        accountLimits: {
-
-            totalLimit: {  type: Number, default: 500000},
-
-            availableLimit: {  type: Number,default: 500000 }
-        },
-
-        transferLimits: {
-
-            totalTransferLimit: { type: Number,default: 100000},
-
-            availableTransferLimit: {type: Number,default: 100000},
-
-            lastTransferDate: {type: Date,default: Date.now()}
-        },
-
-      },
-
 }, {
   timestamps: true,
 });
 
-module.exports = mongoose.model('UserModel', userSchema);
+module.exports = mongoose.model('users', userSchema);

@@ -1,27 +1,29 @@
 
+const userService = require('../services/userService')
+
 class UserController {
 
     async getHome(req, res){
 
         try {
-            
-            console.log('user/home route hit')
 
+            //Todo : get this user id from request header jwt token
+            const userId = "f104211b-b23d-4754-9b0f-9354748a61c1"
 
+            const userAccount = await userService.getHome(userId)
             
             return  res.status(200).json({ 
                 "successful": true,
                 "code": 200,
                 "message": "Data fetched successfully",
                 "data" : {
-                    "currentBalance": "2500.00",
-
+                    "currentBalance": userAccount.currentBalance
                 }
              });
 
 
         } catch (error) {
-             return  res.status(400).json({ message: 'All fields are required' });
+             return  res.status(400).json({ message: error.message });
         }
 
 

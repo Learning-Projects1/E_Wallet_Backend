@@ -1,6 +1,12 @@
-const userService = require('../services/userService');
+const authService = require('../services/authenticationService');
 
 class AuthenticationController {
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// SignUp Controller ////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async signUp(req, res) {
     try {
 
@@ -14,7 +20,7 @@ class AuthenticationController {
         return res.status(400).json({ message: 'All fields are required' });
       }
 
-      const user = await userService.signUp({ email, phoneNumber, cnic, password });
+      const user = await authService.signUp({ email, phoneNumber, cnic, password });
 
       res.status(201).json({
         message: 'User created successfully',
@@ -29,7 +35,9 @@ class AuthenticationController {
 
 
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////// Login Controller /////////////////////////////?///////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async login(req, res){
 
     try{
@@ -56,7 +64,7 @@ class AuthenticationController {
         }
 
 
-        const user = await userService.login({phoneNumber, password})
+        const user = await authService.login({phoneNumber, password})
 
         return res.status(200).json({
             successful : true,
