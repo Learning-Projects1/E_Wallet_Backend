@@ -1,4 +1,5 @@
 const authService = require('../services/authenticationService');
+const jwt = require("jsonwebtoken")
 
 class AuthenticationController {
 
@@ -38,17 +39,17 @@ class AuthenticationController {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////// Login Controller /////////////////////////////?///////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  async login(req, res){
+  async login(request, response){
 
     try{
 
         console.log("Login route hit");
-        console.log(req.body);
+        console.log(request.body);
 
-        const {phoneNumber, password} = req.body
+        const {phoneNumber, password} = request.body
 
         if(!phoneNumber || phoneNumber.trim() === ""){
-          return res.status(200).json({
+          return response.status(200).json({
             successful : false,
             code : 400,
             message : "Phone number is required!"
@@ -56,7 +57,7 @@ class AuthenticationController {
         }
 
         if(!password || password.trim() === ""){
-          return res.status(200).json({
+          return response.status(200).json({
             successful : false,
             code : 400,
             message : "Password is required!"
@@ -66,7 +67,21 @@ class AuthenticationController {
 
         const user = await authService.login({phoneNumber, password})
 
-        return res.status(200).json({
+
+        /// Token Generation
+        let data = {
+          time: new Date().toISOString(),
+          userId: user.userId
+        };
+
+        const token = jwt.sign(data, process.env.JWT_SECRET_KEY, {
+          expiresIn: '10d'
+        });
+
+
+        response.setHeader('auth_token', token)
+
+        return response.status(200).json({
             successful : true,
             code : 200,
             message : "",
@@ -80,7 +95,7 @@ class AuthenticationController {
         })
 
     }catch(error){
-        return res.status(200).json({
+        return response.status(200).json({
             successful : false,
             code : 400,
             message : "Login Failed!",

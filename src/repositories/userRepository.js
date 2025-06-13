@@ -31,7 +31,7 @@ class UserRepository {
   }
 
   async getUserAccount(userId){
-    return await UserAccountModel.findOne({userId});
+    return UserAccountModel.findOne({ userId: userId });
   }
 
 
