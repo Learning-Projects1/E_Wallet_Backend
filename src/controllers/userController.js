@@ -9,16 +9,11 @@ class UserController {
 
         try {
 
-
-            // authenticateToken(request, response)
-        
-
-            const token = request.header['auth_token']
-
-            const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-            userId =  decoded.userId; 
-            
-
+            ///Authenticating bearer token
+            const userId = await authenticateToken(request, response)
+            if(!userId){
+                return
+            }
 
             const userAccount = await userService.getHome(userId)
 
@@ -35,7 +30,11 @@ class UserController {
 
 
         } catch (error) {
-            return response.status(400).json({ message: error.message });
+            return response.status(200).json({ 
+                "isSuccessful": false,
+                "code" : 400,                
+                "message": error.message 
+            });
         }
 
 

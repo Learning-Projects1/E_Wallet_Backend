@@ -7,9 +7,9 @@ require('dotenv').config();
 //***************************************************************************************************************************************************************/  
 async function authenticateToken(req, res) {
 
-  const authHeader = req.headers['auth_token'];
+  const token = req.headers['auth_token'];
 
-  if (!authHeader) {
+  if (!token) {
     res.status(401).json({
       isSuccessful: false,
       message: 'Unauthorized - Bearer token missing'
@@ -17,19 +17,11 @@ async function authenticateToken(req, res) {
     return false;
   }
 
-  const tokenParts = authHeader.split(' ');
-  if (tokenParts.length !== 2 || tokenParts[0] !== 'Bearer') {
-    res.status(401).json({
-      isSuccessful: false,
-      message: 'Unauthorized - Invalid Bearer token format'
-    });
 
-    return false;
-  }
+  let userId ;
 
-  const bearerToken = tokenParts[1];
 
-  jwt.verify(bearerToken, process.env.JWT_SECRET_KEY, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
     if (err) {
       res.status(401).json({
         isSuccessful: false,
@@ -38,16 +30,15 @@ async function authenticateToken(req, res) {
 
       return false;
     } else {
-      req.user = decoded;
-      return true;
+      userId = decoded.userId;
     }
   });
 
-  if(!req.user || req.user.toString().trim() === ''){
+  if(!userId || userId.toString().trim() === ''){
     return false;
   }
 
-  return true;
+  return userId;
 }
 
 module.exports = { authenticateToken: authenticateToken}
