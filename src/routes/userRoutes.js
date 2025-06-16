@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/home', userController.getHome)
-router.get('/syncContacts', userController.syncContacts)
+router.post('/syncContacts', userController.syncContacts)
 
 
 module.exports = router;
