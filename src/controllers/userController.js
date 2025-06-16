@@ -30,15 +30,50 @@ class UserController {
 
 
         } catch (error) {
-            return response.status(200).json({ 
+            return response.status(200).json({
                 "isSuccessful": false,
                 "code" : 400,                
-                "message": error.message 
+                "message": error.message
             });
         }
 
 
     }
+
+
+    async syncContacts(request, response) {
+    try {
+
+
+        console.log(request.body)
+
+        var phoneNumber = request.body.contacts[0];
+
+        let user = await userService.syncContacts(phoneNumber)
+
+        return response.status(200).json({
+            "successful": true,
+            "code": 200,
+            "message": "Contacts synced successfully",
+            "data": [
+                {
+                    "profile": user.profile,
+                    "user_id": user.userId
+                },
+            ]
+        })
+
+
+    } catch (error) {
+        return response.status(200).json({
+            "isSuccessful": false,
+            "code": 400,
+            "message": error.message
+        });
+    }
+    }
+
+
 
 }
 

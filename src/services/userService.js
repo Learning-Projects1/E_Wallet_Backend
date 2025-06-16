@@ -10,6 +10,12 @@ class UserService {
         return userAccount;
     }
 
+    async syncContacts(phoneNumber){
+        
+        const userProfile = await userRepository.findByPhoneNumber(phoneNumber)
+        return userProfile;
+    }
+
 
 }
 

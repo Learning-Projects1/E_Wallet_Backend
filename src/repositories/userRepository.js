@@ -34,9 +34,6 @@ class UserRepository {
     return userAccountModel.findOne({ userId: userId });
   }
 
-
-
-
 }
 
 module.exports = new UserRepository();
