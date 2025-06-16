@@ -20,7 +20,7 @@ class TransactionController {
                 return
             }
 
-            let transactionDetails = transactionService.performWalletTransfer(request,userId)
+            let transactionDetails = await transactionService.performWalletTransfer({request : request,senderUserId : userId})
 
 
             return response.status(200).json({

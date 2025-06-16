@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use('/api/authentication', authenticationRoutes);
 app.use('/api/user', userRoutes);
-app.use('/api/transaction', transactionRoutes);
+app.use('/api/wallet', transactionRoutes);
 
 
 // Routes
