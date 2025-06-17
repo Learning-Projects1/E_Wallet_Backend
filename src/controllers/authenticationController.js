@@ -5,18 +5,18 @@ class AuthenticationController {
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////// SignUp Controller ////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////// SignUp Controller ////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   async signUp(req, res) {
     try {
 
-        console.log("Signup route hit");
-        console.log(req.body);
+      console.log("Signup route hit");
+      console.log(req.body);
 
-      const { email, phoneNumber , cnic, password } = req.body;
+      const { email, phoneNumber, cnic, password } = req.body;
 
-      
+
       if (!email || !phoneNumber || !cnic || !password) {
         return res.status(400).json({ message: 'All fields are required' });
       }
@@ -36,74 +36,85 @@ class AuthenticationController {
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////// Login Controller /////////////////////////////?///////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  async login(request, response){
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////// Login Controller /////////////////////////////?///////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  async login(request, response) {
 
-    try{
+    try {
 
-        console.log("Login route hit");
-        console.log(request.body);
+      console.log("Login route hit");
+      console.log(request.body);
 
-        const {phoneNumber, password} = request.body
+      const { phoneNumber, password } = request.body
 
-        if(!phoneNumber || phoneNumber.trim() === ""){
-          return response.status(200).json({
-            successful : false,
-            code : 400,
-            message : "Phone number is required!"
-          })
+      if (!phoneNumber || phoneNumber.trim() === "") {
+        return response.status(200).json({
+          successful: false,
+          code: 400,
+          message: "Phone number is required!"
+        })
+      }
+
+      if (!password || password.trim() === "") {
+        return response.status(200).json({
+          successful: false,
+          code: 400,
+          message: "Password is required!"
+        })
+      }
+
+
+      const user = await authService.login({ phoneNumber, password })
+
+
+      /// Token Generation
+      let data = {
+        time: new Date().toISOString(),
+        userId: user.userId
+      };
+
+      const token = jwt.sign(data, process.env.JWT_SECRET_KEY, {
+        expiresIn: '10d'
+      });
+
+
+      response.setHeader('auth_token', token)
+
+      return response.status(200).json({
+        successful: true,
+        code: 200,
+        message: "",
+        "wrong_phone_password": false,
+        "emailVerified": true,
+        "phoneVerified": true,
+        "data": {
+          "profile": user.profile
         }
 
-        if(!password || password.trim() === ""){
-          return response.status(200).json({
-            successful : false,
-            code : 400,
-            message : "Password is required!"
-          })
-        }
+      })
 
-
-        const user = await authService.login({phoneNumber, password})
-
-
-        /// Token Generation
-        let data = {
-          time: new Date().toISOString(),
-          userId: user.userId
-        };
-
-        const token = jwt.sign(data, process.env.JWT_SECRET_KEY, {
-          expiresIn: '10d'
-        });
-
-
-        response.setHeader('auth_token', token)
-
-        return response.status(200).json({
-            successful : true,
-            code : 200,
-            message : "",
-            "wrong_phone_password": false,
-            "emailVerified": true,
-            "phoneVerified": true,
-            "data" : {
-            "profile" : user.profile
-            }
-
-        })
-
-    }catch(error){
-        return response.status(200).json({
-            successful : false,
-            code : 400,
-            message : "Login Failed!",
-            subMessage : error.message
-        })
+    } catch (error) {
+      return response.status(200).json({
+        successful: false,
+        code: 400,
+        message: "Login Failed!",
+        subMessage: error.message
+      })
     }
 
-    
+
+  }
+
+  async verifyWalletPin(request, response) {
+
+
+    return response.status(200).json({
+      successful: true,
+      code: 200,
+      message: "User Verified Successfully",
+    })
+
   }
 
 }
