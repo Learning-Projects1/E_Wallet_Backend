@@ -20,7 +20,7 @@ class TransactionService {
         try {
 
 
-            var receiverAccountNo = request.body.accountNumber
+            const receiverAccountNo = request.body.accountNumber
             const amount = Number(request.body.amount)
             const note = request.body.note
 
@@ -29,9 +29,6 @@ class TransactionService {
             if (!receiverAccountNo || receiverAccountNo === "") {
                 throw new Error("Account No. is required")
             }
-
-            /// Converting %2B to + in phone number
-            receiverAccountNo = decodeURIComponent(receiverAccountNo)
 
 
             if (!amount || isNaN(amount) || amount <= 0) {

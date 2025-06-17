@@ -14,6 +14,9 @@ class TransactionController {
 
         try {
 
+
+            console.log(JSON.stringify(request.form, null, 2));
+
             ///Authenticating bearer token
             const userId = await authenticateToken(request, response)
             if(!userId){

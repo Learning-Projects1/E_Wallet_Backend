@@ -13,7 +13,8 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '50mb', extended: true }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 
 app.use('/api/authentication', authenticationRoutes);

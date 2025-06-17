@@ -45,8 +45,6 @@ class UserController {
         try {
 
 
-            console.log(request.body)
-
             ///Authenticating bearer token
             const userId = await authenticateToken(request, response)
             if (!userId) {
