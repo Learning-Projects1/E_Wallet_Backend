@@ -1,4 +1,5 @@
 const userRepository = require("../repositories/userRepository")
+const transactionRepository = require('../repositories/transactionRepository')
 
 
 class UserService {
@@ -15,7 +16,13 @@ class UserService {
         const userProfile = await userRepository.findByPhoneNumber(phoneNumber)
         return userProfile;
     }
+    
 
+    async getTransactionHistory(userId){
+        
+        const transactions = await transactionRepository.getTransactionsByUserId(userId)
+        return transactions;
+    }
 
 }
 

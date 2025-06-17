@@ -27,6 +27,17 @@ app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+// Handle end point not found errors
+app.use((req, res) => {
+  console.error('404 Not Found');
+  console.error('Method:', req.method);
+  console.error('URL:', req.originalUrl);
+  console.error('Query:', req.query);
+  console.error('Body:', req.body);
+  res.status(404).json({ error: 'Endpoint Not Found'});
+});
+
+
 
 // Start server
 const PORT = process.env.PORT || 5000;

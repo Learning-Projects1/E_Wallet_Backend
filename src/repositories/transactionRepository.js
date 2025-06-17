@@ -19,6 +19,18 @@ class TransactionRepository {
       { session, new: true } // `new: true` returns the updated doc
     );
   }
+
+
+  async getTransactionsByUserId(userId){
+    return transactionModel.find({
+      $or : [{senderId : userId}, {receiverId : userId}]
+    }).select({
+      _id: 0,
+      __v: 0
+    })
+  }
+
+  
 }
 
 module.exports = new TransactionRepository();
