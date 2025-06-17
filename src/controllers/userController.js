@@ -11,7 +11,7 @@ class UserController {
 
             ///Authenticating bearer token
             const userId = await authenticateToken(request, response)
-            if(!userId){
+            if (!userId) {
                 return
             }
 
@@ -32,7 +32,7 @@ class UserController {
         } catch (error) {
             return response.status(200).json({
                 "isSuccessful": false,
-                "code" : 400,                
+                "code": 400,
                 "message": error.message
             });
         }
@@ -42,35 +42,41 @@ class UserController {
 
 
     async syncContacts(request, response) {
-    try {
+        try {
 
 
-        console.log(request.body)
+            console.log(request.body)
 
-        var phoneNumber = request.body.contacts[0];
+            ///Authenticating bearer token
+            const userId = await authenticateToken(request, response)
+            if (!userId) {
+                return
+            }
 
-        let user = await userService.syncContacts(phoneNumber)
+            var phoneNumber = request.body.contacts[0];
 
-        return response.status(200).json({
-            "successful": true,
-            "code": 200,
-            "message": "Contacts synced successfully",
-            "data": [
-                {
-                    "profile": user.profile,
-                    "user_id": user.userId
-                },
-            ]
-        })
+            let user = await userService.syncContacts(phoneNumber)
+
+            return response.status(200).json({
+                "successful": true,
+                "code": 200,
+                "message": "Contacts synced successfully",
+                "data": [
+                    {
+                        "profile": user.profile,
+                        "user_id": user.userId
+                    },
+                ]
+            })
 
 
-    } catch (error) {
-        return response.status(200).json({
-            "isSuccessful": false,
-            "code": 400,
-            "message": error.message
-        });
-    }
+        } catch (error) {
+            return response.status(200).json({
+                "isSuccessful": false,
+                "code": 400,
+                "message": error.message
+            });
+        }
     }
 
 
