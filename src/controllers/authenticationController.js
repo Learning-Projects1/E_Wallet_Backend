@@ -89,6 +89,7 @@ class AuthenticationController {
         "emailVerified": true,
         "phoneVerified": true,
         "data": {
+          "user_id": user.userId,
           "profile": user.profile
         }
 

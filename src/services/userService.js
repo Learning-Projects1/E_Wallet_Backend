@@ -20,8 +20,16 @@ class UserService {
 
     async getTransactionHistory(userId){
         
-        const transactions = await transactionRepository.getTransactionsByUserId(userId)
-        return transactions;
+        const transactionsList = await transactionRepository.getTransactionsByUserId(userId)
+
+
+        ///To do : Attach the profile info to transaction
+        // await transactionsList.forEach(async function (singleTransaction){
+            
+        // })
+
+
+        return transactionsList;
     }
 
 }

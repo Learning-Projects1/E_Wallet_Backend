@@ -99,6 +99,10 @@ class TransactionService {
                 currentBalance: receiverUpdatedBalance
             },session)
 
+
+
+            await session.commitTransaction();
+
             return transactionResult
 
 

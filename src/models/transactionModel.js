@@ -1,13 +1,15 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
 
 
 const transactionSchema = new mongoose.Schema({
 
     transactionId: { type: String, unique: true, require: true },
 
-    senderId: { type: String, require: true },
+    senderId: { type: Schema.Types.ObjectId, ref: 'users', required: true },
 
-    receiverId: { type: String, require: true },
+    receiverId: { type: Schema.Types.ObjectId, ref: 'users', required: true  },
 
     amount: { type: Number, require: true, default : 0 },
 
