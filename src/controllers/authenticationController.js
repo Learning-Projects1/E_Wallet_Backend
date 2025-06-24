@@ -25,7 +25,7 @@ class AuthenticationController {
 
       res.status(201).json({
         message: 'User created successfully',
-        userId: user._id,
+        userId: user.userId,
         email: user.email,
       });
     } catch (error) {

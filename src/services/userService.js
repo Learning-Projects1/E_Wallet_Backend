@@ -7,7 +7,7 @@ class UserService {
 
     async getHome(userId){
         
-        const userAccount = await userRepository.getUserAccount(userId)
+        const userAccount = await userRepository.getUserAccountById(userId)
         return userAccount;
     }
 

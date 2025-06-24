@@ -5,10 +5,15 @@ class TransactionRepository {
 
   async createTransaction(transactionData, session = null) {
     const newTransaction = new transactionModel(transactionData);
-    return await newTransaction.save({ session });
+    const saved = await newTransaction.save({ session });
+
+    // Convert to plain object and remove sensitive fields
+    const { senderRef, receiverRef, _id, __v, ...filtered } = saved.toObject();
+
+    return filtered;
   }
 
-  async getUserAccount(userId, session = null) {
+  async getUserAccountById(userId, session = null) {
     return userAccountModel.findOne({ userId }).session(session);
   }
 

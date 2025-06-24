@@ -37,7 +37,7 @@ class TransactionService {
 
 
             ///Getting Sender account details
-            const senderAccount = await transactionRepository.getUserAccount(senderUserId)
+            const senderAccount = await transactionRepository.getUserAccountById(senderUserId)
             const receiverProfile = await userRepository.findByPhoneNumber(receiverAccountNo)
 
 
@@ -45,42 +45,37 @@ class TransactionService {
                 throw new Error("No account exist on this number!")
             }
 
-            const receiverUserId = receiverProfile.userId
 
-
-            if (senderUserId === receiverUserId) {
+            if (senderUserId === receiverProfile.userId) {
                 throw new Error("Sender and receiver accounts must not be same!")
             }
 
 
 
-
             ///Getting Receiver account details
-            const receiverAccount = await transactionRepository.getUserAccount(receiverUserId)
+            const receiverAccount = await transactionRepository.getUserAccountById(receiverProfile.userId)
 
 
 
             if (senderAccount.currentBalance < amount) {
                 throw new Error("Insufficient wallet balance!")
             }
-
-
+            
             let senderBalanceBeforeTransaction = senderAccount.currentBalance
             let receiverBalanceBeforeTransaction = receiverAccount.currentBalance
 
-
-
+           
             ///Performing transaction
             var transactionData = new transactionModel({
                 transactionId: uuid.v4(),
-                senderId: senderUserId,
-                receiverId: receiverAccount.userId,
+                senderId : senderUserId,
+                senderRef: senderAccount.userRef._id,
+                receiverId : receiverProfile.userId,
+                receiverRef: receiverAccount.userRef._id,
                 amount: amount,
                 transactionType: "wallet_transfer",
                 note: note
             })
-
-
             let transactionResult = await transactionRepository.createTransaction(transactionData,session)
 
 

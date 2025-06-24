@@ -42,13 +42,15 @@ class AuthenticationService {
 
     ///Createing User Account
     const userAccount = UserAccountModel({
-      userId : userId
+      userRef :  user._id,
+      userId : user.userId
     })
     await userRepository.createUserAccount(userAccount)
 
     ///Creating user checks
     const userChecksData = UserChecksModel({
-      userId : userId
+      userId : userId,
+      userRef : user._id
     })
     await userRepository.createUserChecks(userChecksData)
 

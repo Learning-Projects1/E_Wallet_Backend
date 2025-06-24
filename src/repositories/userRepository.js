@@ -30,7 +30,7 @@ class UserRepository {
     return await userModel.findOne({ 'profile.cnic' : cnic });
   }
 
-  async getUserAccount(userId){
+  async getUserAccountById(userId){
     return userAccountModel.findOne({ userId: userId });
   }
 

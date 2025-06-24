@@ -1,9 +1,12 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 
 const userAccountSchema = new mongoose.Schema({
 
     userId: { type: String, unique: true, require: true },
+
+    userRef: { type: Schema.Types.ObjectId, ref: 'users', required: true },
 
     cardNumber: { type: String, default: "" },
 
