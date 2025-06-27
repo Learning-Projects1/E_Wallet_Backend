@@ -26,16 +26,41 @@ class TransactionRepository {
   }
 
 
-  async getTransactionsByUserId(userId){
+  async getTransactionsByUserId(userId) {
+
     return transactionModel.find({
-      $or : [{senderId : userId}, {receiverId : userId}]
-    }).select({
-      _id: 0,
-      __v: 0
+      $or: [{ senderId: userId }, { receiverId: userId }]
     })
+      .select({
+        _id: 0,
+        __v: 0
+      })
+      .populate({
+        path: 'senderRef',
+        select: {
+          userId: 1,
+          'profile.firstName': 1,
+          'profile.lastName': 1,
+          'profile.email': 1,
+          'profile.phoneNumber': 1
+        }
+      })
+      .populate({
+        path: 'receiverRef',
+        select: {
+          userId: 1,
+          'profile.firstName': 1,
+          'profile.lastName': 1,
+          'profile.email': 1,
+          'profile.phoneNumber': 1
+        }
+      })
+
+
+
   }
 
-  
+
 }
 
 module.exports = new TransactionRepository();
