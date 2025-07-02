@@ -65,13 +65,13 @@ class AuthenticationController {
       }
 
 
-      const user = await authService.login({ phoneNumber, password })
+      const userData = await authService.login({ phoneNumber, password })
 
 
       /// Token Generation
       let data = {
         time: new Date().toISOString(),
-        userId: user.userId
+        userId: userData.userId
       };
 
       const token = jwt.sign(data, process.env.JWT_SECRET_KEY, {
@@ -88,11 +88,7 @@ class AuthenticationController {
         "wrong_phone_password": false,
         "emailVerified": true,
         "phoneVerified": true,
-        "data": {
-          "user_id": user.userId,
-          "profile": user.profile
-        }
-
+        "data" : userData,
       })
 
     } catch (error) {

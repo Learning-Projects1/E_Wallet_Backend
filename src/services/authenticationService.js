@@ -76,8 +76,15 @@ class AuthenticationService {
       throw new Error("Incorrect password")
     }
 
+    const userAccount = await userRepository.getUserAccountById(user.userId)
 
-    return user
+    const data = {
+      user_id: user.userId,
+      profile: user.profile,
+      accountDetails: userAccount 
+    }
+
+    return data
 
   }
 
