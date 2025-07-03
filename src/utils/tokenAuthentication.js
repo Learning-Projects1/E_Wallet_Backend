@@ -35,6 +35,10 @@ async function authenticateToken(req, res) {
   });
 
   if(!userId || userId.toString().trim() === ''){
+    res.status(401).json({
+        isSuccessful: false,
+        message: 'Unauthorized - Token userId missing (Internal)'
+      });
     return false;
   }
 
