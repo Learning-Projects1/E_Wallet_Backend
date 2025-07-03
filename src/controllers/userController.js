@@ -17,6 +17,7 @@ class UserController {
             ///Authenticating bearer token
             const userId = await authenticateToken(request, response)
             if (!userId) {
+                console.log("In Home API userId null missing found")
                 return
             }
 
