@@ -71,7 +71,7 @@ class AuthenticationController {
       /// Token Generation
       let data = {
         time: new Date().toISOString(),
-        userId: userData.userId
+        userId: userData.user_id
       };
 
       const token = jwt.sign(data, process.env.JWT_SECRET_KEY, {
