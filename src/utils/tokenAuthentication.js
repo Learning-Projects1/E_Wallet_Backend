@@ -9,6 +9,8 @@ async function authenticateToken(req, res) {
 
   const token = req.headers['auth_token'];
 
+  console.log(`RequestedAuthToken: ${token}`)
+
   if (!token) {
     res.status(401).json({
       isSuccessful: false,
