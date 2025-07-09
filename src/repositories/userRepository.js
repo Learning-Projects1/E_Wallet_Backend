@@ -8,30 +8,36 @@ class UserRepository {
     return await user.save();
   }
 
-  async createUserAccount(accountData){
+  async createUserAccount(accountData) {
     const userAccount = new userAccountModel(accountData)
     return await userAccount.save()
   }
 
-  async createUserChecks(checkesData){
+  async createUserChecks(checkesData) {
     const userChecks = new userChecksModel(checkesData)
     return await userChecks.save()
   }
 
   async findByEmail(email) {
-    return await userModel.findOne({ 'profile.email' : email });
+    return await userModel.findOne({ 'profile.email': email });
   }
 
   async findByPhoneNumber(phoneNumber) {
-    return await userModel.findOne({ 'profile.phoneNumber' : phoneNumber});
+    return await userModel.findOne({ 'profile.phoneNumber': phoneNumber });
   }
 
   async findByCnic(cnic) {
-    return await userModel.findOne({ 'profile.cnic' : cnic });
+    return await userModel.findOne({ 'profile.cnic': cnic });
   }
 
-  async getUserAccountById(userId){
+  async getUserAccountById(userId) {
     return userAccountModel.findOne({ userId: userId });
+  }
+
+  async getFavouritesUsers({userId}) {
+    return userModel.find({ userId: { $ne: userId } })
+      .select('-password')
+      .limit(10);
   }
 
 }

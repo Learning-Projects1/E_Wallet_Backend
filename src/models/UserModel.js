@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
         email: { type: String, required: true, unique: true },
         phoneNumber: { type: String, required: true, unique: true },
         cnic: { type: String, required: true, unique: true },
+        profileImage: { type: String, default : "" },
       },
 
 

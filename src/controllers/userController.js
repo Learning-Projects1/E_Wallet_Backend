@@ -17,17 +17,14 @@ class UserController {
             ///Authenticating bearer token
             const userId = await authenticateToken(request, response)
 
-            const userAccount = await userService.getHome(userId)
+            const data = await userService.getHome(userId)
 
-            console.log(userAccount.currentBalance.toString())
 
             return response.status(200).json({
                 "successful": true,
                 "code": 200,
                 "message": "Data fetched successfully",
-                "data": {
-                    "currentBalance": userAccount.currentBalance
-                }
+                "data": data
             });
 
 

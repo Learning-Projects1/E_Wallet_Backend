@@ -3,6 +3,7 @@ const UserModel = require('../models/UserModel');
 const UserAccountModel = require('../models/userAccountModel');
 const UserChecksModel = require('../models/userChecksModel');
 const userRepository = require("../repositories/userRepository")
+const transactionRepository = require("../repositories/transactionRepository")
 const uuid = require('uuid');
 
 class AuthenticationService {

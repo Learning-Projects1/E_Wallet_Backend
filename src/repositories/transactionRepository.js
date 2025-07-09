@@ -26,15 +26,16 @@ class TransactionRepository {
   }
 
 
-  async getTransactionsByUserId(userId) {
+  async getTransactionsByUserId({userId, limit = null}) {
 
-    return transactionModel.find({
+    return await transactionModel.find({
       $or: [{ senderId: userId }, { receiverId: userId }]
     })
       .select({
         _id: 0,
         __v: 0
       })
+      .sort({createdAt : -1})
       .populate({
         path: 'senderRef',
         select: {
@@ -42,7 +43,8 @@ class TransactionRepository {
           'profile.firstName': 1,
           'profile.lastName': 1,
           'profile.email': 1,
-          'profile.phoneNumber': 1
+          'profile.phoneNumber': 1,
+          'profile.profileImage': 1
         }
       })
       .populate({
@@ -52,11 +54,11 @@ class TransactionRepository {
           'profile.firstName': 1,
           'profile.lastName': 1,
           'profile.email': 1,
-          'profile.phoneNumber': 1
+          'profile.phoneNumber': 1,
+          'profile.profileImage': 1,
         }
       })
-
-
+      .limit(limit)
 
   }
 
