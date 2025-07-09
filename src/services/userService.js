@@ -26,7 +26,7 @@ class UserService {
                     lastName: tx.receiverRef.profile.lastName,
                     email: tx.receiverRef.profile.email,
                     phoneNumber: tx.receiverRef.profile.phoneNumber,
-                    profileImage: tx.receiverRef.profile?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(tx.receiverRef.profile?.firstName || "User")}&background=random`
+                    profileImage: tx.receiverRef.profile?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(tx.receiverRef.profile?.firstName || "User")}&background=random&format=png`
 
                 }
 
@@ -37,7 +37,7 @@ class UserService {
                     lastName: tx.senderRef.profile.lastName,
                     email: tx.senderRef.profile.email,
                     phoneNumber: tx.senderRef.profile.phoneNumber,
-                    profileImage: tx.senderRef.profile?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(tx.senderRef.profile?.firstName || "User")}&background=random`
+                    profileImage: tx.senderRef.profile?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(tx.senderRef.profile?.firstName || "User")}&background=random&format=png`
                 }
             }
 
@@ -67,7 +67,7 @@ class UserService {
                 lastName: favUser.profile.lastName,
                 email: favUser.profile.email,
                 phoneNumber: favUser.profile.phoneNumber,
-                profileImage: favUser.profile.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(favUser.profile?.firstName || "User")}&background=random`,
+                profileImage: favUser.profile.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(favUser.profile?.firstName || "User")}&background=random&format=png`,
             }
         })
 
@@ -110,7 +110,7 @@ class UserService {
                     lastName: tx.receiverRef.profile.lastName,
                     email: tx.receiverRef.profile.email,
                     phoneNumber: tx.receiverRef.profile.phoneNumber,
-                    profileImage: tx.receiverRef.profile?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(tx.receiverRef.profile?.firstName || "User")}&background=random`
+                    profileImage: tx.receiverRef.profile?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(tx.receiverRef.profile?.firstName || "User")}&background=random&format=png`
 
                 }
 
@@ -121,7 +121,7 @@ class UserService {
                     lastName: tx.senderRef.profile.lastName,
                     email: tx.senderRef.profile.email,
                     phoneNumber: tx.senderRef.profile.phoneNumber,
-                    profileImage: tx.senderRef.profile?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(tx.senderRef.profile?.firstName || "User")}&background=random`
+                    profileImage: tx.senderRef.profile?.profileImage || `https://ui-avatars.com/api/?name=${encodeURIComponent(tx.senderRef.profile?.firstName || "User")}&background=random&format=png`
                 }
             }
 
