@@ -25,7 +25,8 @@ async function authenticateToken(req, res) {
     if (err) {
       res.status(401).json({
         isSuccessful: false,
-        message: 'Unauthorized - Invalid token'
+        message: 'Unauthorized - Invalid token',
+        errorMessage: err
       });
 
       return false;
